@@ -10,13 +10,11 @@ import Toolbar from "@material-ui/core/Toolbar";
 import List from "@material-ui/core/List";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
+import BubbleChartIcon from "@material-ui/icons/BubbleChart";
+import BarChartIcon from "@material-ui/icons/BarChart";
 
 const drawerWidth = 240;
 
@@ -98,14 +96,6 @@ class MiniDrawer extends React.Component<
     open: false
   };
 
-  handleDrawerOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleDrawerClose = () => {
-    this.setState({ open: false });
-  };
-
   render() {
     const { classes } = this.props;
 
@@ -118,18 +108,7 @@ class MiniDrawer extends React.Component<
             this.state.open && classes.appBarShift
           )}
         >
-          <Toolbar disableGutters={!this.state.open}>
-            <IconButton
-              color="inherit"
-              aria-label="Open drawer"
-              onClick={this.handleDrawerOpen}
-              className={classNames(
-                classes.menuButton,
-                this.state.open && classes.hide
-              )}
-            >
-              <MenuIcon />
-            </IconButton>
+          <Toolbar>
             <Typography variant="title" color="inherit" noWrap>
               ICO contributions
             </Typography>
@@ -138,21 +117,12 @@ class MiniDrawer extends React.Component<
         <Drawer
           variant="permanent"
           classes={{
-            paper: classNames(
-              classes.drawerPaper,
-              !this.state.open && classes.drawerPaperClose
-            )
+            paper: classNames(classes.drawerPaper, classes.drawerPaperClose)
           }}
-          open={this.state.open}
         >
-          <div className={classes.toolbar}>
-            <IconButton onClick={this.handleDrawerClose}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </div>
-          <Divider />
+          <div className={classes.toolbar} />
           <List>
-            {this.props.items.map(item => (
+            {this.props.items.map((item, i) => (
               <ListItem
                 disabled={item === this.props.mode}
                 button
@@ -161,7 +131,7 @@ class MiniDrawer extends React.Component<
                 to={item}
               >
                 <ListItemIcon>
-                  <InboxIcon />
+                  {i ? <BubbleChartIcon /> : <BarChartIcon />}
                 </ListItemIcon>
                 <ListItemText primary={`${item} chart`} />
               </ListItem>

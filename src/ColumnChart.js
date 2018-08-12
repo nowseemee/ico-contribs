@@ -1,4 +1,5 @@
 // @flow
+import React from "react";
 import ReactHighcharts from "react-highcharts";
 import { connect } from "react-redux";
 import { getPhases, getSeries } from "./utils";
@@ -6,7 +7,10 @@ import type { Store } from "./reducers";
 
 const normalColumn = {
   pointPadding: 0.2,
-  borderWidth: 0
+  borderWidth: 0,
+  dataLabels: {
+    enabled: true
+  }
 };
 
 const stackedColumn = {
@@ -51,7 +55,7 @@ const getConfig = (phases, series, mode = "Normal") => ({
   series,
   tooltip: {
     headerFormat: "<b>{point.x}</b><br/>",
-    pointFormat: "{series.name}: {point.y}<br/>Total: {point.stackTotal}"
+    pointFormat: "{series.name}: {point.y}"
   },
   plotOptions: {
     column: mode === "Stacked" ? stackedColumn : normalColumn
@@ -92,4 +96,22 @@ const mapStateToProps = (store: Store, ownProps) => ({
   )
 });
 
-export default connect(mapStateToProps)(ReactHighcharts);
+class Chart extends React.Component<{}> {
+  componentDidMount() {
+    window.addEventListener("resize", this.handleResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.handleResize);
+  }
+
+  handleResize = () => {
+    this.forceUpdate();
+  };
+
+  render() {
+    return <ReactHighcharts {...this.props} />;
+  }
+}
+
+export default connect(mapStateToProps)(Chart);
