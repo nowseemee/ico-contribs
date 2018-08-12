@@ -1,13 +1,24 @@
+// @flow
 import { combineReducers } from "redux";
 import * as actionTypes from "./actionTypes";
+import type { Actions, Contributors } from "./actions";
 
-export const contributorsInitialState = {
+type contributorsInitialStateType = {
+  isLoading: boolean,
+  error: Error | null,
+  body: Contributors
+};
+
+export const contributorsInitialState: contributorsInitialStateType = {
   isLoading: false,
   error: null,
   body: { preIco: [], ico: [], finalIco: [] }
 };
 
-export const contributors = (state = contributorsInitialState, action) => {
+export const contributors = (
+  state: contributorsInitialStateType = contributorsInitialState,
+  action: Actions
+) => {
   switch (action.type) {
     case actionTypes.FETCH_CONTRIBUTORS_REQUEST:
       return {

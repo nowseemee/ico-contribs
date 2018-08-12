@@ -1,9 +1,12 @@
+// @flow
 import { contributors, contributorsInitialState } from "./reducers";
 import * as actionTypes from "./actionTypes";
 describe("reducers", () => {
-  describe("Contributors", () => {
+  describe("contributors", () => {
     test("initial state", () => {
-      expect(contributors(undefined, {})).toEqual(contributorsInitialState);
+      expect(contributors(undefined, { type: "NOOP" })).toEqual(
+        contributorsInitialState
+      );
     });
 
     describe("fetch", () => {
@@ -14,7 +17,7 @@ describe("reducers", () => {
               ...contributorsInitialState,
               isLoading: false,
               error: new Error("omg!"),
-              body: "weird"
+              body: { preIco: [1], ico: [2], finalIco: [3] }
             },
             {
               type: actionTypes.FETCH_CONTRIBUTORS_REQUEST
@@ -24,7 +27,7 @@ describe("reducers", () => {
       });
 
       test("success flips back isLoading, adds body and resets error", () => {
-        const body = { happy: true };
+        const body = { preIco: [4], ico: [2], finalIco: [1] };
         expect(
           contributors(
             {
@@ -50,7 +53,7 @@ describe("reducers", () => {
             {
               ...contributorsInitialState,
               isLoading: true,
-              body: "weird"
+              body: { preIco: [1], ico: [2], finalIco: [3] }
             },
             {
               type: actionTypes.FETCH_CONTRIBUTORS_FAILURE,
