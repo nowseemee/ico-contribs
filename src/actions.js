@@ -16,15 +16,15 @@ export type FetchContributorsRequestType = {
   type: FETCH_CONTRIBUTORS_REQUEST_TYPE
 };
 
-export type Contributors = {
-  preIco: (?any)[],
-  ico: (?any)[],
-  finalIco: (?any)[]
+export type Phases = {
+  preIco: *[],
+  ico: *[],
+  finalIco: *[]
 };
 
 type FetchContributorsSuccessType = {
   type: FETCH_CONTRIBUTORS_SUCCESS_TYPE,
-  body: Contributors
+  body: Phases
 };
 
 type FetchContributorsFailureType = {
@@ -44,7 +44,7 @@ export const fetchContributorsRequest = () => ({
   type: FETCH_CONTRIBUTORS_REQUEST
 });
 
-export const fetchContributorsSuccess = (body: Contributors) => ({
+export const fetchContributorsSuccess = (body: Phases) => ({
   type: FETCH_CONTRIBUTORS_SUCCESS,
   body
 });
@@ -64,6 +64,6 @@ export const fetchContributors = () => (
   dispatch(fetchContributorsRequest());
   return fetch("/api/inputs")
     .then(res => res.json())
-    .then((body: Contributors) => dispatch(fetchContributorsSuccess(body)))
+    .then((body: Phases) => dispatch(fetchContributorsSuccess(body)))
     .catch((error: Error) => dispatch(fetchContributorsFailure(error)));
 };

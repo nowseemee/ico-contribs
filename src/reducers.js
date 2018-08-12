@@ -1,12 +1,12 @@
 // @flow
 import { combineReducers } from "redux";
 import * as actionTypes from "./actionTypes";
-import type { Actions, Contributors } from "./actions";
+import type { Actions, Phases } from "./actions";
 
 type contributorsInitialStateType = {
   isLoading: boolean,
   error: Error | null,
-  body: Contributors
+  body: Phases
 };
 
 export const contributorsInitialState: contributorsInitialStateType = {
@@ -46,6 +46,9 @@ export const contributors = (
   }
 };
 
+export type Store = {
+  contributors: contributorsInitialStateType
+};
 export default combineReducers({
   contributors
 });
