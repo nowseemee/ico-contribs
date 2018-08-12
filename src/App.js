@@ -1,25 +1,43 @@
+// @flow
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Route } from "react-router-dom";
 import { fetchContributors } from "./actions";
 
-class App extends Component {
+import AppBar from "./AppBar";
+import ColumnChart from "./ColumnChart";
+
+type Props = {
+  match: {
+    params: {
+      mode: "Normal" | "Stacked"
+    }
+  },
+  fetchContributors: () => void
+};
+
+class App extends Component<Props> {
   componentDidMount() {
     this.props.fetchContributors();
   }
+
   render() {
-    return <div>{this.props.isLoading && "Loading..."}</div>;
+    return (
+      <AppBar
+        items={["Normal", "Stacked"]}
+        mode={this.props.match.params.mode || "Normal"}
+      >
+        <Route path="/:mode?" component={ColumnChart} />
+      </AppBar>
+    );
   }
 }
 
-const mapStateToProps = state => ({ isLoading: state.contributors.isLoading });
-
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch: any): any => ({
   fetchContributors: () => dispatch(fetchContributors())
 });
 
-const ConnectedApp = connect(
-  mapStateToProps,
+export default connect(
+  () => ({}),
   mapDispatchToProps
 )(App);
-
-export default ConnectedApp;
