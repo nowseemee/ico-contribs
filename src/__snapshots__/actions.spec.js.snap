@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`actions sync fetchContributorsFailure 1`] = `
+Object {
+  "error": [Error: wtf?],
+  "type": "FETCH_CONTRIBUTORS_FAILURE",
+}
+`;
+
+exports[`actions sync fetchContributorsRequest 1`] = `
+Object {
+  "type": "FETCH_CONTRIBUTORS_REQUEST",
+}
+`;
+
+exports[`actions sync fetchContributorsSuccess 1`] = `
+Object {
+  "body": Object {
+    "ico": Array [],
+    "preIco": Array [],
+  },
+  "type": "FETCH_CONTRIBUTORS_SUCCESS",
+}
+`;
